@@ -3,6 +3,7 @@ package com.amnil.invbackend.controller;
 import com.amnil.invbackend.dto.OrderItemDto;
 import com.amnil.invbackend.service.OrderItemService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Slf4j
 public class OrderItemController {
     private final OrderItemService orderItemService;
 
-    @PostMapping("/order-items")
+    @PostMapping("/admin/order-items")
     public ResponseEntity<OrderItemDto> createOrderItem(@RequestBody OrderItemDto orderItemDto) {
+        log.info("entered create admin order-items");
         OrderItemDto createdOrderItem = orderItemService.createOrderItem(orderItemDto);
         return ResponseEntity.ok(createdOrderItem);
     }

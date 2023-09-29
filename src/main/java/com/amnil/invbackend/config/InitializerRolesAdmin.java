@@ -63,7 +63,7 @@ public class InitializerRolesAdmin implements CommandLineRunner {
                 LocalUser adminUser = new LocalUser();
                 adminUser.setName("Admin");
                 adminUser.setUsername("admin");
-                adminUser.setEmail("admin@example.com");
+                adminUser.setEmail("admin@gmail.com");
                 adminUser.setPassword(passwordEncoder.encode("admin"));
                 adminUser.setAddress("Admin Address");
                 adminUser.setPhoneNumber("1234567890");

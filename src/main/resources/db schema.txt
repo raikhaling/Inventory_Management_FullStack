@@ -1,0 +1,41 @@
+Entities and Relationships:
+
+User:
+   Fields: id (Primary Key), username, password, email, role (for Spring Security roles)
+
+Product:
+    Fields: id (Primary Key), name, description, price, quantity, supplier_id (Foreign Key)
+
+Supplier:
+    Fields: id (Primary Key), name, contact_person, email, phone
+
+Order:
+     Fields: id (Primary Key), order_date, user_id (Foreign Key)
+
+OrderItem:
+    Fields: id (Primary Key), order_id (Foreign Key), product_id (Foreign Key), quantity, unit_price
+
+Database Tables:========================================
+
+users (for User authentication and authorization)
+    Columns: id, username, password, email, role
+
+suppliers (to store supplier information)
+    Columns: id, name, contact_person, email, phone
+
+products (to store product information)
+    Columns: id, name, description, price, quantity, supplier_id
+
+orders (to store order information)
+    Columns: id, order_date, user_id
+
+order_items (to store the items in each order)
+    Columns: id, order_id, product_id, quantity, unit_price
+
+
+Relationships:
+
+Each Product is associated with one Supplier (Many-to-One relationship).
+Each Order is associated with one User (Many-to-One relationship).
+Each Order can have multiple OrderItems (One-to-Many relationship).
+Each Product can appear in multiple OrderItems (One-to-Many relationship).

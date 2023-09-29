@@ -51,6 +51,11 @@ public class LocalUser {
         inverseJoinColumns = @JoinColumn(name = "roles_id", referencedColumnName = "id"))
     private Set<Role> roles;
 
+//    @OneToOne
+//    private Cart cart;
+
+    @OneToOne
+    private Order order;
 
 
 }

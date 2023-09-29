@@ -1,20 +1,26 @@
 package com.amnil.invbackend.controller;
 
 import com.amnil.invbackend.dto.OrderDto;
+import com.amnil.invbackend.dto.OrderItemDto;
 import com.amnil.invbackend.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Slf4j
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping("/order")
-    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
-        OrderDto createdOrder = orderService.createOrder(orderDto);
+    @PostMapping("/admin/order/{orderItemId}")
+    public ResponseEntity<OrderDto> createOrder(@PathVariable Long orderItemId, @RequestBody OrderDto orderDto) {
+       log.info("inside oder create controller.");
+        OrderDto createdOrder = orderService.createOrder(orderItemId, orderDto);
         return ResponseEntity.ok(createdOrder);
     }
 
@@ -27,6 +33,14 @@ public class OrderController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @GetMapping("/order")
+    public ResponseEntity<List<OrderDto>> getAllOrders() {
+       List<OrderDto> orders = orderService.getAllOrders();
+       if (orders.isEmpty()){
+           return ResponseEntity.notFound().build();
+       }
+       return ResponseEntity.ok(orders);
     }
 
     @PutMapping("/order/{id}")

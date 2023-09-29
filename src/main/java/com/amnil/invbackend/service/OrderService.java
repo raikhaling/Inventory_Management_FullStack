@@ -6,7 +6,7 @@ import com.amnil.invbackend.dto.OrderDto;
 import java.util.List;
 
 public interface OrderService {
-    OrderDto createOrder(OrderDto orderDto);
+    OrderDto createOrder( Long orderItemId,  OrderDto orderDto);
 
     List<OrderDto> getAllOrders();
 
