@@ -1,6 +1,6 @@
 package com.amnil.invbackend.service;
 
-import com.amnil.invbackend.dto.OrderItemDto;
+import com.amnil.invbackend.dto.core.OrderItemDto;
 
 import java.util.List;
 

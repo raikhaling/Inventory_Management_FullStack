@@ -1,5 +1,6 @@
-package com.amnil.invbackend.dto;
+package com.amnil.invbackend.dto.core;
 
+import com.amnil.invbackend.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItemDto {
-    private Long id;
+    private Long orderItemId;
     private int quantity;
     private Long orderId;
-    private Long productId;
+    private ProductDto product;
 }

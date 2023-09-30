@@ -1,6 +1,6 @@
 package com.amnil.invbackend.service.impl;
 
-import com.amnil.invbackend.dto.RoleDto;
+import com.amnil.invbackend.dto.core.RoleDto;
 import com.amnil.invbackend.entity.LocalUser;
 import com.amnil.invbackend.entity.Role;
 import com.amnil.invbackend.exception.EntityNotFoundException;
@@ -10,7 +10,6 @@ import com.amnil.invbackend.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor

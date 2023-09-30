@@ -1,12 +1,10 @@
 package com.amnil.invbackend.controller;
 
-import com.amnil.invbackend.dto.ProductDto;
-import com.amnil.invbackend.entity.Product;
+import com.amnil.invbackend.dto.core.ProductDto;
 import com.amnil.invbackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,7 +51,7 @@ public class ProductController {
         if(existingProduct == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        updateProduct.setId(id);
+        updateProduct.setProductId(id);
       //  productService.saveProduct(updateProduct);
         return ResponseEntity.ok(updateProduct);
     }

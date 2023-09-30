@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -54,8 +55,8 @@ public class LocalUser {
 //    @OneToOne
 //    private Cart cart;
 
-    @OneToOne
-    private Order order;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Order> order = new HashSet<>();
 
 
 }

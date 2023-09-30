@@ -1,7 +1,6 @@
 package com.amnil.invbackend.controller.csv;
 
-import com.amnil.invbackend.dto.ProductDto;
-import com.amnil.invbackend.entity.Product;
+import com.amnil.invbackend.dto.core.ProductDto;
 import com.amnil.invbackend.service.ProductService;
 import com.amnil.invbackend.service.csv.CsvExportService;
 import lombok.RequiredArgsConstructor;

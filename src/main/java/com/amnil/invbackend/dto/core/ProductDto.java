@@ -1,4 +1,4 @@
-package com.amnil.invbackend.dto;
+package com.amnil.invbackend.dto.core;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,13 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDto {
-    private Long id;
+    private Long productId;
     private String productName;
     private double productPrice;
-    private Boolean stock;
-    private Integer productQuantity;
-    private Boolean live;
-    private String productImage;
-    private String  productDescription;
     private SupplierDto supplier;
 }

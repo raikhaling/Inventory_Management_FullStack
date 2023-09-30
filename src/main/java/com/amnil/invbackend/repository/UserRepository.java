@@ -1,6 +1,5 @@
 package com.amnil.invbackend.repository;
 
-import com.amnil.invbackend.dto.UserDto;
 import com.amnil.invbackend.entity.LocalUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

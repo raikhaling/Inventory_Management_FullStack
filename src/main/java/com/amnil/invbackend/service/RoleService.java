@@ -1,6 +1,6 @@
 package com.amnil.invbackend.service;
 
-import com.amnil.invbackend.dto.RoleDto;
+import com.amnil.invbackend.dto.core.RoleDto;
 
 public interface RoleService {
     RoleDto createRole(RoleDto roleDto);

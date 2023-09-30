@@ -1,12 +1,13 @@
 package com.amnil.invbackend.service;
 
-import com.amnil.invbackend.dto.OrderDto;
+import com.amnil.invbackend.dto.PlaceOrderRequestDto;
+import com.amnil.invbackend.dto.core.OrderDto;
 
 
 import java.util.List;
 
 public interface OrderService {
-    OrderDto createOrder( Long orderItemId,  OrderDto orderDto);
+    OrderDto placeOrder(PlaceOrderRequestDto request);
 
     List<OrderDto> getAllOrders();
 

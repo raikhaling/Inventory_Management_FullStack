@@ -1,6 +1,6 @@
 package com.amnil.invbackend.service.impl;
 
-import com.amnil.invbackend.dto.UserDto;
+import com.amnil.invbackend.dto.core.UserDto;
 import com.amnil.invbackend.entity.LocalUser;
 import com.amnil.invbackend.exception.EntityNotFoundException;
 import com.amnil.invbackend.repository.UserRepository;

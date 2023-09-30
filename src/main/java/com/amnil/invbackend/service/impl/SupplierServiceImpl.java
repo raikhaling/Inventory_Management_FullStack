@@ -1,8 +1,6 @@
 package com.amnil.invbackend.service.impl;
 
-import com.amnil.invbackend.dto.ProductDto;
-import com.amnil.invbackend.dto.SupplierDto;
-import com.amnil.invbackend.entity.Product;
+import com.amnil.invbackend.dto.core.SupplierDto;
 import com.amnil.invbackend.entity.Supplier;
 import com.amnil.invbackend.exception.EntityNotFoundException;
 import com.amnil.invbackend.repository.SupplierRepository;

@@ -1,18 +1,13 @@
-package com.amnil.invbackend.dto;
+package com.amnil.invbackend.dto.core;
 
-import com.amnil.invbackend.entity.Product;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import lombok.*;
-
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SupplierDto {
 
-    private Long id;
+    private Long supplierId;
 
     private String name;
 

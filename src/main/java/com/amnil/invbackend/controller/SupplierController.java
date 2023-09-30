@@ -1,13 +1,11 @@
 package com.amnil.invbackend.controller;
 
 import com.amnil.invbackend.dto.ApiResponse;
-import com.amnil.invbackend.dto.SupplierDto;
-import com.amnil.invbackend.repository.SupplierRepository;
+import com.amnil.invbackend.dto.core.SupplierDto;
 import com.amnil.invbackend.service.SupplierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,7 +51,7 @@ public class SupplierController {
         if(existingProduct == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        supplierDto.setId(id);
+        supplierDto.setSupplierId(id);
         supplierService.save(supplierDto);
         return ResponseEntity.ok(supplierDto);
     }
@@ -66,7 +64,7 @@ public class SupplierController {
         }
         else {
             supplierService.deleteSupplierById(id);
-            Long deletedId = existingOrder.getId();
+            Long deletedId = existingOrder.getSupplierId();
             return new ResponseEntity<ApiResponse>(
                     new ApiResponse("Id :"+deletedId +",is deleted.",true)
                     ,HttpStatus.OK);

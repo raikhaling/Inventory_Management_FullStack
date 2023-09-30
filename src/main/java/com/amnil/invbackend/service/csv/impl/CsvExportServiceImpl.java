@@ -1,6 +1,6 @@
 package com.amnil.invbackend.service.csv.impl;
 
-import com.amnil.invbackend.dto.ProductDto;
+import com.amnil.invbackend.dto.core.ProductDto;
 import com.amnil.invbackend.entity.Product;
 import com.amnil.invbackend.service.csv.CsvExportService;
 import com.opencsv.CSVWriter;

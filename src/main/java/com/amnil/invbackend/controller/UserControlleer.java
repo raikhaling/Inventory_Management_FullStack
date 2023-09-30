@@ -1,14 +1,11 @@
 package com.amnil.invbackend.controller;
 
 import com.amnil.invbackend.dto.ApiResponse;
-import com.amnil.invbackend.dto.UserDto;
-import com.amnil.invbackend.repository.UserRepository;
+import com.amnil.invbackend.dto.core.UserDto;
 import com.amnil.invbackend.service.UserService;
-import com.amnil.invbackend.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;

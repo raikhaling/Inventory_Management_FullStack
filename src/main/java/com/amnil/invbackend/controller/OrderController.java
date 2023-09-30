@@ -1,7 +1,7 @@
 package com.amnil.invbackend.controller;
 
-import com.amnil.invbackend.dto.OrderDto;
-import com.amnil.invbackend.dto.OrderItemDto;
+import com.amnil.invbackend.dto.PlaceOrderRequestDto;
+import com.amnil.invbackend.dto.core.OrderDto;
 import com.amnil.invbackend.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +17,10 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping("/admin/order/{orderItemId}")
-    public ResponseEntity<OrderDto> createOrder(@PathVariable Long orderItemId, @RequestBody OrderDto orderDto) {
-       log.info("inside oder create controller.");
-        OrderDto createdOrder = orderService.createOrder(orderItemId, orderDto);
-        return ResponseEntity.ok(createdOrder);
+    @PostMapping("/admin/place-order")
+    public ResponseEntity<OrderDto> placeOrder(@RequestBody PlaceOrderRequestDto request) {
+        OrderDto placedOrder = orderService.placeOrder(request);
+        return ResponseEntity.ok(placedOrder);
     }
 
 

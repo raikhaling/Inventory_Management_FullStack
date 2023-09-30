@@ -1,7 +1,6 @@
 package com.amnil.invbackend.service.csv;
 
-import com.amnil.invbackend.dto.ProductDto;
-import com.amnil.invbackend.entity.Product;
+import com.amnil.invbackend.dto.core.ProductDto;
 
 import java.io.IOException;
 import java.util.List;

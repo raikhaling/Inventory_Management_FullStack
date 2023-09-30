@@ -1,7 +1,7 @@
 package com.amnil.invbackend.service.impl;
 
-import com.amnil.invbackend.dto.ProductDto;
-import com.amnil.invbackend.dto.SupplierDto;
+import com.amnil.invbackend.dto.core.ProductDto;
+import com.amnil.invbackend.dto.core.SupplierDto;
 import com.amnil.invbackend.entity.Product;
 import com.amnil.invbackend.entity.Supplier;
 import com.amnil.invbackend.exception.EntityNotFoundException;
@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getProductById(Long id) {
-        Product product= productRepository.findById(id)
+        Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
         return modelMapper.map(product, ProductDto.class);
     }
@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> getAllProducts() {
         List<Product> products = productRepository.findAll();
         List<ProductDto> productDtos = products.stream()
-                .map(product -> modelMapper.map(product,ProductDto.class))
+                .map(product -> modelMapper.map(product, ProductDto.class))
                 .collect(Collectors.toList());
         return productDtos;
     }
@@ -51,8 +51,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto saveProduct(ProductDto productDto, Long supplierId) {
         //fetch supplier is there or not
         log.info("supplier searching");
-        Supplier supplier =  supplierRepository.findById(supplierId)
-                .orElseThrow(()->new EntityNotFoundException("Supplier not found with id: "+supplierId));
+        Supplier supplier = supplierRepository.findById(supplierId)
+                .orElseThrow(() -> new EntityNotFoundException("Supplier not found with id: " + supplierId));
         log.info("supplier found");
         Product product = modelMapper.map(productDto, Product.class);
         product.setSupplier(supplier);
@@ -69,10 +69,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> getAllProductsBySupplier(Long id) {
         Supplier supplier = supplierRepository.findById(id)
-                .orElseThrow(()-> new EntityNotFoundException("Supplier not Found with id: "+id));
+                .orElseThrow(() -> new EntityNotFoundException("Supplier not Found with id: " + id));
         List<Product> products = productRepository.findBySupplier(supplier);
 
-        if(products.isEmpty())
+        if (products.isEmpty())
             throw new EntityNotFoundException("List is empty.");
         return products.stream()
                 .map((element) -> modelMapper.map(element, ProductDto.class))
@@ -80,21 +80,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     //Custom mapper function
-    public ProductDto toDto(Product product){
-        ProductDto productDto = new ProductDto();
-        productDto.setId(product.getId());
-        productDto.setProductDescription(product.getProductDescription());
-        productDto.setProductImage(product.getProductImage());
-        productDto.setProductPrice(product.getProductPrice());
-
-        //change supplier to supplierDto
-        SupplierDto supplierDto = new SupplierDto();
-        supplierDto.setId(product.getSupplier().getId());
-        supplierDto.setName(product.getSupplier().getName());
-        supplierDto.setContactEmail(product.getSupplier().getContactEmail());
-        productDto.setSupplier(supplierDto);
-        return productDto;
-    }
+//    public ProductDto toDto(Product product){
+//        ProductDto productDto = new ProductDto();
+//        productDto.setProductId(product.getId());
+//        productDto.setProductDescription(product.getProductDescription());
+//        productDto.setProductImage(product.getProductImage());
+//        productDto.setProductPrice(product.getProductPrice());
+//
+//        //change supplier to supplierDto
+//        SupplierDto supplierDto = new SupplierDto();
+//        supplierDto.setSupplierId(product.getSupplier().getId());
+//        supplierDto.setName(product.getSupplier().getName());
+//        supplierDto.setContactEmail(product.getSupplier().getContactEmail());
+//        productDto.setSupplier(supplierDto);
+//        return productDto;
+//    }
 }
 
 

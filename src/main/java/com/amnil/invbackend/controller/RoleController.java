@@ -1,7 +1,6 @@
 package com.amnil.invbackend.controller;
 
-import com.amnil.invbackend.dto.RoleDto;
-import com.amnil.invbackend.repository.RoleRepository;
+import com.amnil.invbackend.dto.core.RoleDto;
 import com.amnil.invbackend.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -18,4 +21,7 @@ public class Role {
     private Long id;
     @Column(unique = true)
     private String name;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<LocalUser> users = new HashSet<>();
 }

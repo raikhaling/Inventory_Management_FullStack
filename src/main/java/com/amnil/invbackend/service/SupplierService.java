@@ -1,7 +1,6 @@
 package com.amnil.invbackend.service;
 
-import com.amnil.invbackend.dto.SupplierDto;
-import com.amnil.invbackend.entity.Supplier;
+import com.amnil.invbackend.dto.core.SupplierDto;
 
 import java.util.List;
 

@@ -14,7 +14,7 @@ import java.util.Set;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "order_id", nullable = false)
     private Long id;
 
     @Column(name = "order_amount", nullable = false)
@@ -26,7 +26,8 @@ public class Order {
     @Column(name = "billing_address", nullable = false)
     private String billingAddress;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private LocalUser user;
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST})

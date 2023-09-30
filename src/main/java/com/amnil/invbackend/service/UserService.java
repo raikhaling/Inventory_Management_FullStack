@@ -1,6 +1,6 @@
 package com.amnil.invbackend.service;
 
-import com.amnil.invbackend.dto.UserDto;
+import com.amnil.invbackend.dto.core.UserDto;
 
 import java.util.List;
 

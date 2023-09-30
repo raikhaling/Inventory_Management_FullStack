@@ -1,14 +1,16 @@
 package com.amnil.invbackend.service.impl;
 
-import com.amnil.invbackend.dto.OrderDto;
-import com.amnil.invbackend.dto.OrderItemDto;
-import com.amnil.invbackend.dto.UserDto;
+import com.amnil.invbackend.dto.OrderItemRequest;
+import com.amnil.invbackend.dto.PlaceOrderRequestDto;
+import com.amnil.invbackend.dto.core.OrderDto;
 import com.amnil.invbackend.entity.LocalUser;
 import com.amnil.invbackend.entity.Order;
 import com.amnil.invbackend.entity.OrderItem;
+import com.amnil.invbackend.entity.Product;
 import com.amnil.invbackend.exception.EntityNotFoundException;
 import com.amnil.invbackend.repository.OrderItemRepository;
 import com.amnil.invbackend.repository.OrderRepository;
+import com.amnil.invbackend.repository.ProductRepository;
 import com.amnil.invbackend.repository.UserRepository;
 import com.amnil.invbackend.service.OrderService;
 import lombok.AllArgsConstructor;
@@ -16,10 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,69 +28,58 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
+    private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
 
 
-    public OrderDto createOrder( Long orderItemId,  OrderDto orderDto) {
+    @Override
+    public OrderDto placeOrder(PlaceOrderRequestDto request) {
 
-        Optional<OrderItem> orderItemOptional = orderItemRepository.findById(orderItemId);
+        LocalUser user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
 
-        OrderItem orderItem;
-
-        if (orderItemOptional.isPresent()) {
-             orderItem = orderItemOptional.get();
-        } else {
-            OrderItem newOrderItem = new OrderItem();
-            newOrderItem.setProduct(null); // Set the product
-            orderItem = orderItemRepository.save(newOrderItem);
-        }
-
-
-        // Find the user by user ID from the orderDto
-        LocalUser user = userRepository.findById(orderDto.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + orderDto.getUserId()));
-        log.info("User found.");
-        Order order = modelMapper.map(orderDto, Order.class);
+        // Create an Order
+        Order order = new Order();
+        order.setBillingAddress(request.getBillingAddress());
         order.setUser(user);
-        order.setOrderAmount(orderDto.getOrderAmount());
-        order.setOrderQuantity(orderDto.getOrderQuantity());
-        order.setBillingAddress(order.getBillingAddress());
 
-        //orderItem.setOrder(order);
+        Set<OrderItem> orderItems = new HashSet<>();
 
+        // Process and associate order items with products
+        for (OrderItemRequest itemRequest : request.getOrderItems()) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setQuantity(itemRequest.getQuantity());
+
+            // Find the product by product ID from the request
+            Product product = productRepository.findById(itemRequest.getProductId())
+                    .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + itemRequest.getProductId()));
+
+            orderItem.setProduct(product);
+            orderItem.setOrder(order);
+
+            orderItems.add(orderItem);
+        }
+        order.setOrderItems(orderItems);
+
+        // Calculate the total order amount
+        double totalAmount = orderItems.stream()
+                .mapToDouble(item -> item.getProduct().getProductPrice() * item.getQuantity())
+                .sum();
+        order.setOrderAmount(String.valueOf(totalAmount));
+
+        Long totalQty = orderItems.stream()
+                .mapToLong(OrderItem::getQuantity)
+                .sum();
+
+        order.setOrderQuantity(String.valueOf(totalQty));
 
         Order savedOrder = orderRepository.save(order);
-        OrderItem savedOrderItem = orderItemRepository.save(orderItem);
+        List<OrderItem> savedOrderItems = orderItemRepository.saveAll(orderItems);
+
 
         return modelMapper.map(savedOrder, OrderDto.class);
     }
 
-
-
-//    public OrderDto createOrder(OrderDto orderDto) {
-//        LocalUser user = userRepository.findById(orderDto.getUserId())
-//                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + orderDto.getUserId()));
-//
-//        Order order = modelMapper.map(orderDto, Order.class);
-//
-//        order.setUser(user);
-//
-//        Set<OrderItem> orderItems = new HashSet<>();
-//        for (OrderItemDto itemDto : orderDto.getOrderItems()) {
-//            // Map each OrderItemDto to an OrderItem entity
-//            OrderItem orderItem = modelMapper.map(itemDto, OrderItem.class);
-//
-//            orderItem.setOrder(order);
-//
-//            orderItems.add(orderItem);
-//        }
-//
-//        order.setOrderItems(orderItems);
-//
-//        Order savedOrder = orderRepository.save(order);
-//
-//        return modelMapper.map(savedOrder, OrderDto.class);
-//    }
 
     public List<OrderDto> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
@@ -120,6 +108,41 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + id));
         orderRepository.delete(existingOrder);
     }
+
+//    public OrderDto createOrder( Long orderItemId,  OrderDto orderDto) {
+//
+//        Optional<OrderItem> orderItemOptional = orderItemRepository.findById(orderItemId);
+//
+//        OrderItem orderItem;
+//
+//        if (orderItemOptional.isPresent()) {
+//            orderItem = orderItemOptional.get();
+//        } else {
+//            OrderItem newOrderItem = new OrderItem();
+//            newOrderItem.setProduct(null); // Set the product
+//            orderItem = orderItemRepository.save(newOrderItem);
+//        }
+//
+//
+//        // Find the user by user ID from the orderDto
+//        LocalUser user = userRepository.findById(orderDto.getUserId())
+//                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + orderDto.getUserId()));
+//        log.info("User found.");
+//        Order order = modelMapper.map(orderDto, Order.class);
+//        order.setUser(user);
+//        order.setOrderAmount(orderDto.getOrderAmount());
+//        order.setOrderQuantity(orderDto.getOrderQuantity());
+//        order.setBillingAddress(order.getBillingAddress());
+//
+//        //orderItem.setOrder(order);
+//
+//
+//        Order savedOrder = orderRepository.save(order);
+//        OrderItem savedOrderItem = orderItemRepository.save(orderItem);
+//
+//        return modelMapper.map(savedOrder, OrderDto.class);
+//    }
+
 
 
 
