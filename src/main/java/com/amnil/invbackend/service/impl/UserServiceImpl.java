@@ -7,6 +7,8 @@ import com.amnil.invbackend.repository.UserRepository;
 import com.amnil.invbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,10 +42,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAllUsers() {
-        List<LocalUser> users = userRepository.findAllUsers();
+        List<LocalUser> users;
+        if(isAdmin()){
+            users = userRepository.findAllUsers();
+        }else {
+            users = userRepository.findAllUsersExceptAdmin(); // custom query
+        }
 
         return users.stream()
                 .map((user)->modelMapper.map(user,UserDto.class)).toList();
+    }
+    private boolean isAdmin(){ //check if admin
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch((authority) -> authority.getAuthority().equals("ROLE_ADMIN"));
     }
 
     @Override

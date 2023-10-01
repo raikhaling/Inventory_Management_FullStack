@@ -2,10 +2,14 @@ package com.amnil.invbackend.controller;
 
 import com.amnil.invbackend.dto.ApiResponse;
 import com.amnil.invbackend.dto.core.UserDto;
+import com.amnil.invbackend.entity.LocalUser;
+import com.amnil.invbackend.security.CustomUserDetailService;
 import com.amnil.invbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -29,6 +33,9 @@ public class UserControlleer {
     //@PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/public/users")
     public ResponseEntity<List<UserDto>> getAllUsers(){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         List<UserDto> dtos = userService.getAllUsers();
         if(dtos.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

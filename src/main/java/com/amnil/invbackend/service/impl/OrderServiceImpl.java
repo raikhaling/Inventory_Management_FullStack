@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
             OrderItem orderItem = new OrderItem();
             orderItem.setQuantity(itemRequest.getQuantity());
 
-            // Find the product by product ID from the request
+            // find the product by product ID from the request
             Product product = productRepository.findById(itemRequest.getProductId())
                     .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + itemRequest.getProductId()));
 
@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         }
         order.setOrderItems(orderItems);
 
-        // Calculate the total order amount
+        // calculate the total order amount
         double totalAmount = orderItems.stream()
                 .mapToDouble(item -> item.getProduct().getProductPrice() * item.getQuantity())
                 .sum();

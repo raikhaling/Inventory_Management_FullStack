@@ -32,5 +32,8 @@ public interface UserRepository extends JpaRepository<LocalUser, Long> {
 
     Boolean existsByUsername(String username);
 
+    @Query("SELECT u FROM LocalUser u WHERE NOT EXISTS (SELECT r FROM u.roles r WHERE r.name = 'ROLE_ADMIN')")
+    List<LocalUser> findAllUsersExceptAdmin();
+
 
 }
