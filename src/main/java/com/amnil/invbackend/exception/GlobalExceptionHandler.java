@@ -1,5 +1,6 @@
 package com.amnil.invbackend.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -24,5 +27,15 @@ public class GlobalExceptionHandler {
                 web.getDescription(false)
         );
         return new ResponseEntity<>(errorDetails,HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex) {
+        List<String> errors = ex.getConstraintViolations().stream()
+                .map(violation -> violation.getMessage())
+                .collect(Collectors.toList());
+
+        ValidationErrorResponse errorResponse = new ValidationErrorResponse("Validation failed", errors);
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }

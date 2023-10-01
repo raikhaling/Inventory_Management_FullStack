@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
                 .mapToLong(OrderItem::getQuantity)
                 .sum();
 
-        order.setOrderQuantity(String.valueOf(totalQty));
+        order.setOrderQuantity(totalQty);
 
         Order savedOrder = orderRepository.save(order);
         List<OrderItem> savedOrderItems = orderItemRepository.saveAll(orderItems);

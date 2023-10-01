@@ -1,6 +1,9 @@
 package com.amnil.invbackend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,14 +20,18 @@ public class Order {
     @Column(name = "order_id", nullable = false)
     private Long id;
 
+    @NotBlank(message = "Order amount is required")
     @Column(name = "order_amount", nullable = false)
     private String orderAmount;
 
+    @Positive(message = "Order quantity must be a positive number ")
     @Column(name = "order_quantity", nullable = false)
-    private String orderQuantity;
+    private Long orderQuantity;
 
+    @NotBlank(message = "Billing address is required")
     @Column(name = "billing_address", nullable = false)
     private String billingAddress;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

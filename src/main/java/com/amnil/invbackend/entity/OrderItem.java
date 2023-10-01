@@ -1,6 +1,7 @@
 package com.amnil.invbackend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,8 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id", nullable = false)
     private Long id;
+
+
     private int quantity;
 
     @ManyToOne
