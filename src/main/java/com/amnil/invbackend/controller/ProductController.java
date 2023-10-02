@@ -44,7 +44,7 @@ public class ProductController {
     }
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/products/{id}")
-    public ResponseEntity<ProductDto> updateOrder(@PathVariable Long id,
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long id,
                                                @RequestBody ProductDto updateProduct){
 
         ProductDto existingProduct = productService.getProductById(id);
@@ -57,7 +57,7 @@ public class ProductController {
     }
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/products/{id}")
-    public ResponseEntity<ProductDto> deleteOrder(@PathVariable Long id){
+    public ResponseEntity<ProductDto> deleteProduct(@PathVariable Long id){
         ProductDto existingOrder = productService.getProductById(id);
         if(existingOrder == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

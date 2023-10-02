@@ -4,13 +4,14 @@ package com.amnil.invbackend.dto.core;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserDto extends RepresentationModel {
     private Long id;
 
     private String name;

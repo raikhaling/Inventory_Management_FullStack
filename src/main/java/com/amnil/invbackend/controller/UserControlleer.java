@@ -2,6 +2,7 @@ package com.amnil.invbackend.controller;
 
 import com.amnil.invbackend.dto.ApiResponse;
 import com.amnil.invbackend.dto.core.UserDto;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import com.amnil.invbackend.entity.LocalUser;
 import com.amnil.invbackend.security.CustomUserDetailService;
 import com.amnil.invbackend.service.UserService;
@@ -34,9 +35,10 @@ public class UserControlleer {
     @GetMapping("/public/users")
     public ResponseEntity<List<UserDto>> getAllUsers(){
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         List<UserDto> dtos = userService.getAllUsers();
+
+        dtos.stream().map((ele) -> ele.add(linkTo(methodOn(UserControlleer.class)
+                .getUserById(ele.getId())).withSelfRel())).toList();
         if(dtos.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -47,6 +49,10 @@ public class UserControlleer {
     @GetMapping("/public/users/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id){
         UserDto dto = userService.getUserById(id);
+
+        //implementation of hateaos
+        dto.add(linkTo(methodOn(UserControlleer.class).getAllUsers()).withSelfRel());
+
         return ResponseEntity.ok(dto);
     }
     //@PreAuthorize("hasRole('ADMIN')")

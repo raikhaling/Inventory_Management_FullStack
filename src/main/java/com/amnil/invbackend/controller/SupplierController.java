@@ -17,7 +17,7 @@ public class SupplierController {
     private final SupplierService supplierService;
     //@PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/public/suppliers/{id}")
-    public ResponseEntity<SupplierDto> getProductById(@PathVariable Long id){
+    public ResponseEntity<SupplierDto> getSupplierById(@PathVariable Long id){
         SupplierDto supplierDto = supplierService.getSupplierById(id);
         if(supplierDto != null)
             return ResponseEntity.ok(supplierDto);
@@ -27,7 +27,7 @@ public class SupplierController {
     }
     //@PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/public/suppliers")
-    public ResponseEntity<List<SupplierDto>> getProducts(){
+    public ResponseEntity<List<SupplierDto>> getSuppliers(){
         List<SupplierDto> suppliers = supplierService.getSuppliers();
         if(!suppliers.isEmpty())
             return ResponseEntity.ok(suppliers);
@@ -38,13 +38,13 @@ public class SupplierController {
     }
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/suppliers")
-    public ResponseEntity<SupplierDto> createProduct( @RequestBody SupplierDto supplierDto){
+    public ResponseEntity<SupplierDto> createSupplier( @RequestBody SupplierDto supplierDto){
         SupplierDto supplierDto1 = supplierService.save(supplierDto);
         return ResponseEntity.ok(supplierDto1);
     }
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/suppliers/{id}")
-    public ResponseEntity<SupplierDto> updateOrder(@PathVariable Long id,
+    public ResponseEntity<SupplierDto> updateSupplier(@PathVariable Long id,
                                                   @RequestBody SupplierDto supplierDto){
 
         SupplierDto existingProduct = supplierService.getSupplierById(id);
@@ -57,7 +57,7 @@ public class SupplierController {
     }
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/suppliers/{id}")
-    public ResponseEntity<ApiResponse> deleteOrder(@PathVariable Long id){
+    public ResponseEntity<ApiResponse> deleteSupplier(@PathVariable Long id){
         SupplierDto existingOrder = supplierService.getSupplierById(id);
         if(existingOrder == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
