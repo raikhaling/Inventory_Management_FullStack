@@ -54,10 +54,11 @@ public class AuthServiceImpl implements AuthService {
         user.setUsername(registerDto.getUsername());
         user.setEmail(registerDto.getEmail());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setAddress("xyz");
+        user.setAddress(registerDto.getAddress());
         user.setActive(true);
-        user.setPhoneNumber("1234567898");
+        user.setPhoneNumber(registerDto.getPhoneNumber());
         user.setDate(LocalDateTime.now());
+
         Set<Role> roles = new HashSet<>();
         Role userRole = roleRepository.findByName("ROLE_USER")
                         .orElseThrow(()-> new EntityNotFoundException("Role is not found."));

@@ -13,5 +13,6 @@ public class ProductDto {
     private Long productId;
     private String productName;
     private double productPrice;
+    private Integer productQuantity;
     private SupplierDto supplier;
 }

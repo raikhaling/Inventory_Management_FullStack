@@ -23,15 +23,14 @@ public class UserControlleer {
     private final UserService userService;
 
     //@PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/admin/users")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
-        LocalDateTime now = LocalDateTime.now();
-        userDto.setDate(now);
-        UserDto userDto1 = userService.createUser(userDto);
-        return ResponseEntity.ok(userDto1);
-
-    }
-    //@PreAuthorize("hasAnyRole('ADMIN','USER')")
+//    @PostMapping("/admin/users")
+//    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+//        LocalDateTime now = LocalDateTime.now();
+//        userDto.setDate(now);
+//        UserDto userDto1 = userService.createUser(userDto);
+//        return ResponseEntity.ok(userDto1);
+//
+//    }
     @GetMapping("/public/users")
     public ResponseEntity<List<UserDto>> getAllUsers(){
 

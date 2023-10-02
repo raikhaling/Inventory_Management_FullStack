@@ -17,8 +17,10 @@ public class RoleController {
     }
 
     @PostMapping("/assign")
-    public ResponseEntity<String> assignRoleToUser(@RequestParam Long userId, @RequestParam String roleName) {
-        roleService.assignRoleToUser(userId, roleName);
+    public ResponseEntity<String> assignRoleToUser(@RequestBody RoleDto roleDto) {
+        roleService.assignRoleToUser(roleDto);
         return ResponseEntity.ok("Role assigned successfully.");
     }
+
+    //update role
 }
