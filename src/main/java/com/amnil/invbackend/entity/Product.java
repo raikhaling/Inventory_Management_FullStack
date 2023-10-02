@@ -29,12 +29,14 @@ public class Product {
     @Column(name = "product_price")
     private double productPrice;
 
-    private Boolean stock;
+
 
     @Positive(message = "Product quantity must be a positive number")
     @NotNull(message = "Product quantity is required")
     @Column(name = "product_quantity")
     private Integer productQuantity;
+
+    private Boolean stock;
 
     private Boolean live;
 

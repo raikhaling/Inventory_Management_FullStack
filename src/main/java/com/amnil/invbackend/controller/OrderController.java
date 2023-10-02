@@ -17,14 +17,14 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping("/admin/place-order")
+    @PostMapping("/public/place-order")
     public ResponseEntity<OrderDto> placeOrder(@RequestBody PlaceOrderRequestDto request) {
         OrderDto placedOrder = orderService.placeOrder(request);
         return ResponseEntity.ok(placedOrder);
     }
 
 
-    @GetMapping("/order/{id}")
+    @GetMapping("/public/order/{id}")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable Long id) {
         OrderDto order = orderService.getOrderById(id);
         if (order != null) {
@@ -33,7 +33,7 @@ public class OrderController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("/order")
+    @GetMapping("/public/order")
     public ResponseEntity<List<OrderDto>> getAllOrders() {
        List<OrderDto> orders = orderService.getAllOrders();
        if (orders.isEmpty()){
@@ -42,7 +42,7 @@ public class OrderController {
        return ResponseEntity.ok(orders);
     }
 
-    @PutMapping("/order/{id}")
+    @PutMapping("/admin/order/{id}")
     public ResponseEntity<OrderDto> updateOrder(@PathVariable Long id, @RequestBody OrderDto updatedOrderDto) {
         OrderDto updatedOrder = orderService.updateOrder(id, updatedOrderDto);
         if (updatedOrder != null) {
@@ -52,7 +52,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("/order/{id}")
+    @DeleteMapping("/admin/order/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();

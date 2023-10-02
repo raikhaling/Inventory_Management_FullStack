@@ -18,27 +18,27 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    @Override
-    public UserDto createUser(UserDto userDto) {
-        //extract email and check if user already exists
-        String email = userDto.getEmail();
-        //LocalUser existingUser = userRepository.findByEmail(email)
-          //      .orElseThrow(()-> new EntityNotFoundException("User already created"));
-//        if(existingUser!= null){
-//            throw new EntityNotFoundException("User already exist with email: "+email);
-//        }
-        //save a user
-        LocalUser user = modelMapper.map(userDto, LocalUser.class);
-        //userRepository.save(user);
-        userRepository.save(user);
-
-        LocalUser secureUser = new LocalUser();
-        secureUser.setId(user.getId());
-        secureUser.setPhoneNumber(user.getPhoneNumber());
-        secureUser.setEmail(user.getEmail());
-
-        return modelMapper.map(secureUser,UserDto.class);
-    }
+//    @Override
+//    public UserDto createUser(UserDto userDto) {
+//        //extract email and check if user already exists
+//        String email = userDto.getEmail();
+//        //LocalUser existingUser = userRepository.findByEmail(email)
+//          //      .orElseThrow(()-> new EntityNotFoundException("User already created"));
+////        if(existingUser!= null){
+////            throw new EntityNotFoundException("User already exist with email: "+email);
+////        }
+//        //save a user
+//        LocalUser user = modelMapper.map(userDto, LocalUser.class);
+//        //userRepository.save(user);
+//        userRepository.save(user);
+//
+//        LocalUser secureUser = new LocalUser();
+//        secureUser.setId(user.getId());
+//        secureUser.setPhoneNumber(user.getPhoneNumber());
+//        secureUser.setEmail(user.getEmail());
+//
+//        return modelMapper.map(secureUser,UserDto.class);
+//    }
 
     @Override
     public List<UserDto> getAllUsers() {

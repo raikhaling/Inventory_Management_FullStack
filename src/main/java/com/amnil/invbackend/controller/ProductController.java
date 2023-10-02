@@ -36,7 +36,7 @@ public class ProductController {
     }
     //create
     //@PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/admin/products/{supplierId}")
+    @PostMapping("/admin/products-by/{supplierId}")
     public ResponseEntity<ProductDto> createProduct( @RequestBody ProductDto productDto,
                                                      @PathVariable Long supplierId){
         ProductDto savedProduct = productService.saveProduct(productDto, supplierId);
@@ -68,8 +68,7 @@ public class ProductController {
         }
     }
     //Find Product by Suppliers
-    //@PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @GetMapping("/public/products/supplier/{supplierId}")
+    @GetMapping("/public/find-products-by-supplier/{supplierId}")
     public ResponseEntity<List<ProductDto>> getProductsBySuppliers(
             @PathVariable Long supplierId){
         List<ProductDto> productsBySupplier = productService.getAllProductsBySupplier(supplierId);

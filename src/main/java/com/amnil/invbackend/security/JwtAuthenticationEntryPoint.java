@@ -8,14 +8,25 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+class CustomAuthenticationException extends AuthenticationException {
+    public CustomAuthenticationException(String message) {
+        super(message);
+    }
+}
+
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, //commence method called -> exception occured -> unauthorized  occurs
+    public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
-        //add error to response object
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+        // Extract the exception message
+        String errorMessage = authException.getMessage();
 
+        // Create a custom error message based on the exception
+        String customErrorMessage = "Authentication failed: " + errorMessage;
+
+        // Send the custom error message along with 401 status code
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, customErrorMessage);
     }
 }
