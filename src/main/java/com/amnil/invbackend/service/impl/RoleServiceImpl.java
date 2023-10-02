@@ -19,29 +19,43 @@ public class RoleServiceImpl implements RoleService {
     private final UserRepository userRepository;
     public RoleDto createRole(RoleDto roleDto) {
         log.info("inside role creation method.");
-        if (roleRepository.existsByName(roleDto.getName())) {
+        if (roleRepository.existsByName(roleDto.getRoleName())) {
             throw new EntityNotFoundException("Role already exists.");
         }
 
         // Create the new role
         Role role = new Role();
-        role.setName(roleDto.getName());
+        role.setName(roleDto.getRoleName());
         roleRepository.save(role);
         log.info("role created with :{}",role.getName());
         return roleDto;
     }
 
-    public void assignRoleToUser(Long userId, String roleName) {
+    public void assignRoleToUser(RoleDto roleDto) {
+        try{
+            LocalUser user = userRepository.findById(roleDto.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("User not found."));
 
-        LocalUser user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found."));
+            Role role = roleRepository.findByName(roleDto.getRoleName())
+                    .orElseThrow(() -> new EntityNotFoundException("Role not found."));
 
-        Role role = roleRepository.findByName(roleName)
+            user.getRoles().add(role);
+
+            userRepository.save(user);
+        }catch (Exception e){
+            log.error("Exception : {}",e.getMessage());
+            throw new EntityNotFoundException(e.getMessage());
+        }
+    }
+
+    public RoleDto updateRole(Long roleId, RoleDto updatedRoleDto) {
+        Role role = roleRepository.findById(roleId)
                 .orElseThrow(() -> new EntityNotFoundException("Role not found."));
 
-        user.getRoles().add(role);
+        role.setName(updatedRoleDto.getRoleName());
 
-        // Update the user in the database
-        userRepository.save(user);
+        roleRepository.save(role);
+
+        return updatedRoleDto;
     }
 }
