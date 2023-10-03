@@ -1,6 +1,7 @@
 package com.amnil.invbackend.dto.auth;
 
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterDto{
+public class RegisterDto extends RepresentationModel<RegisterDto> {
     private String name;
     private String username;
     private String email;

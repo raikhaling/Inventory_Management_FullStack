@@ -49,27 +49,33 @@ public class AuthServiceImpl implements AuthService {
             throw new InventoryApiException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
         }
 
-        LocalUser user = new LocalUser();
-        user.setName(registerDto.getName());
-        user.setUsername(registerDto.getUsername());
-        user.setEmail(registerDto.getEmail());
-        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setAddress(registerDto.getAddress());
-        user.setActive(true);
-        user.setPhoneNumber(registerDto.getPhoneNumber());
-        user.setDate(LocalDateTime.now());
+        try {
+            LocalUser user = new LocalUser();
+            user.setName(registerDto.getName());
+            user.setUsername(registerDto.getUsername());
+            user.setEmail(registerDto.getEmail());
+            user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+            user.setAddress(registerDto.getAddress());
+            user.setActive(true);
+            user.setPhoneNumber(registerDto.getPhoneNumber());
+            user.setDate(LocalDateTime.now());
 
-        Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName("ROLE_USER")
-                        .orElseThrow(()-> new EntityNotFoundException("Role is not found."));
-        log.info("user created with role : {} name : {}",userRole.getName(),user.getName());
-        roles.add(userRole);
+            Set<Role> roles = new HashSet<>();
+            Role userRole = roleRepository.findByName("ROLE_USER")
+                    .orElseThrow(()-> new EntityNotFoundException("Role is not found."));
+            log.info("user created with role : {} name : {}",userRole.getName(),user.getName());
+            roles.add(userRole);
 
-        user.setRoles(roles);
+            user.setRoles(roles);
 
-        userRepository.save(user);
 
-        return "User Registered Successfully!.";
+            userRepository.save(user);
+
+
+        }catch(Exception e){
+            log.info("Exception occured : {}",e.getMessage());
+        }
+        return "User Registered Successfully! Please proceed to login.";
     }
 
     @Override

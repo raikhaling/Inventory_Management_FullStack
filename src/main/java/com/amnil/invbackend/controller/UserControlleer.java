@@ -3,17 +3,11 @@ package com.amnil.invbackend.controller;
 import com.amnil.invbackend.dto.ApiResponse;
 import com.amnil.invbackend.dto.core.UserDto;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-import com.amnil.invbackend.entity.LocalUser;
-import com.amnil.invbackend.security.CustomUserDetailService;
 import com.amnil.invbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
