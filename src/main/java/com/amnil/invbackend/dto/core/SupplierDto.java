@@ -3,6 +3,9 @@ package com.amnil.invbackend.dto.core;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+/**
+ * The type Supplier dto.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

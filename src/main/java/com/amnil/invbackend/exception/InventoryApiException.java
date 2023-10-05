@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+/**
+ * The type Inventory api exception.
+ */
 @Getter
 @AllArgsConstructor
 public class InventoryApiException extends RuntimeException{

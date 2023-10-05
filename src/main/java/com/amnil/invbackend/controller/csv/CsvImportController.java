@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The type Csv import controller.
+ */
 @RestController
 @RequestMapping("/api/import")
 @RequiredArgsConstructor
@@ -21,6 +24,12 @@ public class CsvImportController {
 
     private final CsvImportService csvImportService;
 
+    /**
+     * Import products response entity.
+     *
+     * @param file the file
+     * @return the response entity
+     */
     @PostMapping("/products")
     public ResponseEntity<List<ProductDto>> importProducts(@RequestParam("file") MultipartFile file) {
         try {

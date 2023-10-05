@@ -17,11 +17,18 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The type Custom user detail service.
+ */
 @Service
 @AllArgsConstructor
 @Slf4j
 public class CustomUserDetailService implements UserDetailsService {
+    /**
+     * userRepository
+     */
     private final UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
         log.info("Attempting to load user by email: {}", usernameOrEmail);
@@ -43,4 +50,6 @@ public class CustomUserDetailService implements UserDetailsService {
                 authoritySet
         );
     }
-}
+} /**
+ * log
+ */

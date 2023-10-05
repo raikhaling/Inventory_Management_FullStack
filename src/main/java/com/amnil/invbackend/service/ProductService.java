@@ -4,11 +4,47 @@ import com.amnil.invbackend.dto.core.ProductDto;
 
 import java.util.List;
 
+/**
+ * The interface Product service.
+ */
 public interface ProductService {
+    /**
+     * Gets product by id.
+     *
+     * @param id the id
+     * @return the product by id
+     */
     ProductDto getProductById(Long id);
+
+    /**
+     * Gets all products.
+     *
+     * @return the all products
+     */
     List<ProductDto> getAllProducts();
-  //  ProductDto saveProduct(ProductDto product);
+
+    /**
+     * Delete product.
+     *
+     * @param id the id
+     */
+//  ProductDto saveProduct(ProductDto product);
     void deleteProduct(Long id);
+
+    /**
+     * Gets all products by supplier.
+     *
+     * @param id the id
+     * @return the all products by supplier
+     */
     List<ProductDto> getAllProductsBySupplier(Long id);
+
+    /**
+     * Save product product dto.
+     *
+     * @param productDto the product dto
+     * @param supplierId the supplier id
+     * @return the product dto
+     */
     ProductDto saveProduct(ProductDto productDto, Long supplierId);
 }

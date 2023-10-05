@@ -8,6 +8,9 @@ import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type String response with links.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,6 +18,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class StringResponseWithLinks extends RepresentationModel<StringResponseWithLinks> {
 
+    /**
+     * message
+     */
     private String message;
 
 }

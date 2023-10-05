@@ -10,12 +10,24 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * The type Supplier controller.
+ */
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class SupplierController {
+    /**
+     * supplierService
+     */
     private final SupplierService supplierService;
-    //@PreAuthorize("hasAnyRole('ADMIN','USER')")
+
+    /**
+     * Get supplier by id response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @GetMapping("/public/suppliers/{id}")
     public ResponseEntity<SupplierDto> getSupplierById(@PathVariable Long id){
         SupplierDto supplierDto = supplierService.getSupplierById(id);
@@ -25,7 +37,7 @@ public class SupplierController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
-    //@PreAuthorize("hasAnyRole('ADMIN','USER')")
+
     @GetMapping("/public/suppliers")
     public ResponseEntity<List<SupplierDto>> getSuppliers(){
         List<SupplierDto> suppliers = supplierService.getSuppliers();
@@ -36,13 +48,26 @@ public class SupplierController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
-    //@PreAuthorize("hasRole('ADMIN')")
+
+    /**
+     * Create supplier response entity.
+     *
+     * @param supplierDto the supplier dto
+     * @return the response entity
+     */
     @PostMapping("/admin/suppliers")
     public ResponseEntity<SupplierDto> createSupplier( @RequestBody SupplierDto supplierDto){
         SupplierDto supplierDto1 = supplierService.save(supplierDto);
         return ResponseEntity.ok(supplierDto1);
     }
-    //@PreAuthorize("hasRole('ADMIN')")
+
+    /**
+     * Update supplier response entity.
+     *
+     * @param id          the id
+     * @param supplierDto the supplier dto
+     * @return the response entity
+     */
     @PutMapping("/admin/suppliers/{id}")
     public ResponseEntity<SupplierDto> updateSupplier(@PathVariable Long id,
                                                   @RequestBody SupplierDto supplierDto){
@@ -55,7 +80,13 @@ public class SupplierController {
         supplierService.save(supplierDto);
         return ResponseEntity.ok(supplierDto);
     }
-    //@PreAuthorize("hasRole('ADMIN')")
+
+    /**
+     * Delete supplier response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @DeleteMapping("/admin/suppliers/{id}")
     public ResponseEntity<ApiResponse> deleteSupplier(@PathVariable Long id){
         SupplierDto existingOrder = supplierService.getSupplierById(id);

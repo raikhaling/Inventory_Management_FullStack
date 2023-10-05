@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The type Authentication controller.
+ */
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
@@ -20,16 +23,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private AuthService authService;
 
-
-   
-   
+    /**
+     * Register response entity.
+     *
+     * @param registerDto the register dto
+     * @return the response entity
+     */
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
         log.info("Attempting to register in with email: {}", registerDto.getEmail());
         String response = authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    //Login Api
+
+    /**
+     * Login response entity.
+     *
+     * @param loginDto the login dto
+     * @return the response entity
+     */
+//Login Api
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
         log.info("Attempting to log in with email: {}", loginDto.getUsernameOrEmail());

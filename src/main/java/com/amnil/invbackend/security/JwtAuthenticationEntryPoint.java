@@ -8,12 +8,10 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-class CustomAuthenticationException extends AuthenticationException {
-    public CustomAuthenticationException(String message) {
-        super(message);
-    }
-}
 
+/**
+ * The type Jwt authentication entry point.
+ */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override

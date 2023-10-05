@@ -9,12 +9,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * The type Product controller.
+ */
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class ProductController {
+
+    /**
+     * productService
+     */
     private final ProductService productService;
-   // @PreAuthorize("hasAnyRole('ADMIN','USER')")
+
+    /**
+     * Get product by id response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @GetMapping("/public/products/{id}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable Long id){
         ProductDto productDto = productService.getProductById(id);
@@ -24,7 +37,7 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
-    //@PreAuthorize("hasAnyRole('ADMIN','USER')")
+
     @GetMapping("/public/products")
     public ResponseEntity<List<ProductDto>> getProducts(){
         List<ProductDto> products = productService.getAllProducts();
@@ -34,15 +47,28 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
-    //create
-    //@PreAuthorize("hasRole('ADMIN')")
+
+    /**
+     * Create product response entity.
+     *
+     * @param productDto the product dto
+     * @param supplierId the supplier id
+     * @return the response entity
+     */
     @PostMapping("/admin/products-by/{supplierId}")
     public ResponseEntity<ProductDto> createProduct( @RequestBody ProductDto productDto,
                                                      @PathVariable Long supplierId){
         ProductDto savedProduct = productService.saveProduct(productDto, supplierId);
         return ResponseEntity.ok(savedProduct);
     }
-    //@PreAuthorize("hasRole('ADMIN')")
+
+    /**
+     * Update product response entity.
+     *
+     * @param id            the id
+     * @param updateProduct the update product
+     * @return the response entity
+     */
     @PutMapping("/admin/products/{id}")
     public ResponseEntity<ProductDto> updateProduct(@PathVariable Long id,
                                                @RequestBody ProductDto updateProduct){
@@ -55,7 +81,13 @@ public class ProductController {
       //  productService.saveProduct(updateProduct);
         return ResponseEntity.ok(updateProduct);
     }
-    //@PreAuthorize("hasRole('ADMIN')")
+
+    /**
+     * Delete product response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @DeleteMapping("/admin/products/{id}")
     public ResponseEntity<ProductDto> deleteProduct(@PathVariable Long id){
         ProductDto existingOrder = productService.getProductById(id);
@@ -67,7 +99,13 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
-    //Find Product by Suppliers
+
+    /**
+     * Get products by suppliers response entity.
+     *
+     * @param supplierId the supplier id
+     * @return the response entity
+     */
     @GetMapping("/public/find-products-by-supplier/{supplierId}")
     public ResponseEntity<List<ProductDto>> getProductsBySuppliers(
             @PathVariable Long supplierId){

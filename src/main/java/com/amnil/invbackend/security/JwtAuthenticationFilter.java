@@ -17,15 +17,30 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * The type Jwt authentication filter.
+ */
 //Execute before executing Spring Security Filters
 //Validate the JWT Token and Provide user details to Spring Security for Authentication
 @Component
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    /**
+     * jwtTokenProvider
+     */
     private JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * userDetailsService
+     */
     private UserDetailsService userDetailsService;
 
+    /**
+     * Instantiates a new Jwt authentication filter.
+     *
+     * @param jwtTokenProvider   the jwt token provider
+     * @param userDetailsService the user details service
+     */
     public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider, UserDetailsService userDetailsService) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userDetailsService = userDetailsService;
@@ -69,4 +84,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         return null;
     }
-}
+} /**
+ * log
+ */

@@ -10,6 +10,9 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type Role.
+ */
 @Entity
 @Getter
 @Setter
@@ -17,14 +20,23 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "roles")
 public class Role {
+    /**
+     * id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * name
+     */
     @NotBlank(message = "Role name is required")
     @Column(unique = true)
     private String name;
 
+    /**
+     * users
+     */
     @ManyToMany(mappedBy = "roles")
     private Set<LocalUser> users = new HashSet<>();
 }

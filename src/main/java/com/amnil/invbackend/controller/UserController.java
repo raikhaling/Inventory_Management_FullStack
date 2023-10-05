@@ -10,45 +10,61 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+/**
+ * The type User controller.
+ */
 @RestController
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
-public class UserControlleer {
+public class UserController {
+    /**
+     * userService
+     */
     private final UserService userService;
 
-    //@PreAuthorize("hasRole('ADMIN')")
-//    @PostMapping("/admin/users")
-//    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
-//        LocalDateTime now = LocalDateTime.now();
-//        userDto.setDate(now);
-//        UserDto userDto1 = userService.createUser(userDto);
-//        return ResponseEntity.ok(userDto1);
-//
-//    }
+
+    /**
+     * Get all users response entity.
+     *
+     * @return the response entity
+     */
     @GetMapping("/public/users")
     public ResponseEntity<List<UserDto>> getAllUsers(){
 
         List<UserDto> dtos = userService.getAllUsers();
 
-        dtos.stream().map((ele) -> ele.add(linkTo(methodOn(UserControlleer.class)
+        dtos.stream().map((ele) -> ele.add(linkTo(methodOn(UserController.class)
                 .getUserById(ele.getId())).withSelfRel())).toList();
+
         if(dtos.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return ResponseEntity.ok(dtos);
     }
 
-    //@PreAuthorize("hasAnyRole('ADMIN','USER')")
+    /**
+     * Get user by id response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
+
     @GetMapping("/public/users/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id){
         UserDto dto = userService.getUserById(id);
 
         //implementation of hateaos
-        dto.add(linkTo(methodOn(UserControlleer.class).getAllUsers()).withSelfRel());
+        dto.add(linkTo(methodOn(UserController.class).getAllUsers()).withSelfRel());
 
         return ResponseEntity.ok(dto);
     }
-    //@PreAuthorize("hasRole('ADMIN')")
+
+    /**
+     * Delete by id response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @DeleteMapping("/admin/users/{id}")
     public ResponseEntity<ApiResponse> deleteById(@PathVariable Long id){
         userService.deleteUserById(id);

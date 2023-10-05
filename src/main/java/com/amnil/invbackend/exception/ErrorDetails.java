@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Error details.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

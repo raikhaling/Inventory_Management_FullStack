@@ -14,12 +14,24 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type Initializer roles admin.
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class InitializerRolesAdmin implements CommandLineRunner {
+    /**
+     * userRepository
+     */
     private final UserRepository userRepository;
+    /**
+     * roleRepository
+     */
     private final RoleRepository roleRepository;
+    /**
+     * passwordEncoder
+     */
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -80,4 +92,6 @@ public class InitializerRolesAdmin implements CommandLineRunner {
             log.error("Error occurred during admin initialization: {}", e.getMessage());
         }
     }
-}
+} /**
+ * log
+ */
