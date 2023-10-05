@@ -41,10 +41,10 @@ public class SpringSecurityConfig {
         http.csrf().disable();
         // Set permissions on endpoints
         http.authorizeHttpRequests((authorize) ->{
-            authorize.requestMatchers("/api/v1/admin/**").hasRole("ADMIN");
-            authorize.requestMatchers("api/v1/public/**").hasAnyRole("ADMIN","USER");
-            authorize.requestMatchers("/api/role/admin/**").hasRole("ADMIN");
-            authorize.requestMatchers("/api/auth/**").permitAll();
+//            authorize.requestMatchers("/api/v1/admin/**").hasRole("ADMIN");
+//            authorize.requestMatchers("api/v1/public/**").hasAnyRole("ADMIN","USER");
+//            authorize.requestMatchers("/api/role/admin/**").hasRole("ADMIN");
+            authorize.requestMatchers("/api/**").permitAll();
 //                    authorize.requestMatchers(HttpMethod.PUT,"/api/v1/**").hasRole("ROLE_ADMIN");
 //                    authorize.requestMatchers(HttpMethod.DELETE,"api/v1/**").hasRole("ROLE_ADMIN");
 //                    authorize.requestMatchers(HttpMethod.GET,"api/v1/**").hasAnyRole(

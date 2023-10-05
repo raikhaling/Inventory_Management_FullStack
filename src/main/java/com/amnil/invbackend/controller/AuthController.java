@@ -1,16 +1,11 @@
 package com.amnil.invbackend.controller;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
-import com.amnil.invbackend.dto.StringResponseWithLinks;
 import com.amnil.invbackend.dto.auth.JwtAuthResponse;
 import com.amnil.invbackend.dto.auth.LoginDto;
 import com.amnil.invbackend.dto.auth.RegisterDto;
 import com.amnil.invbackend.service.AuthService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,25 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class AuthController {
-    private final AuthService authService;
-    private final StringResponseWithLinks responseWithLinks;
+    private AuthService authService;
 
-    //Register Api
+
+   
+   
     @PostMapping("/register")
-    public ResponseEntity<StringResponseWithLinks> register(@RequestBody RegisterDto registerDto){
+    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
         log.info("Attempting to register in with email: {}", registerDto.getEmail());
         String response = authService.register(registerDto);
-
-        //Add links to response
-        Link selfLink = linkTo(AuthController.class).slash("/login").withSelfRel();
-
-        responseWithLinks.setMessage(response);
-        responseWithLinks.add(selfLink);
-
-        return ResponseEntity.ok(responseWithLinks);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     //Login Api
     @PostMapping("/login")

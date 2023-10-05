@@ -8,6 +8,7 @@ import com.amnil.invbackend.entity.Order;
 import com.amnil.invbackend.entity.OrderItem;
 import com.amnil.invbackend.entity.Product;
 import com.amnil.invbackend.exception.EntityNotFoundException;
+import com.amnil.invbackend.exception.InventoryApiException;
 import com.amnil.invbackend.repository.OrderItemRepository;
 import com.amnil.invbackend.repository.OrderRepository;
 import com.amnil.invbackend.repository.ProductRepository;
@@ -16,6 +17,7 @@ import com.amnil.invbackend.service.OrderService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -104,9 +106,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public void deleteOrder(Long id) {
-        Order existingOrder = orderRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + id));
-        orderRepository.delete(existingOrder);
+        try {
+            Order existingOrder = orderRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + id));
+            orderRepository.delete(existingOrder);
+        }catch (Exception e){
+            throw new InventoryApiException(HttpStatus.NOT_ACCEPTABLE, "Error occured due mappping relationship.");
+        }
+
     }
 
 //    public OrderDto createOrder( Long orderItemId,  OrderDto orderDto) {
