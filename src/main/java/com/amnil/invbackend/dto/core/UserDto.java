@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto extends RepresentationModel {
+public class UserDto extends RepresentationModel<UserDto> {
     private Long id;
 
     private String name;

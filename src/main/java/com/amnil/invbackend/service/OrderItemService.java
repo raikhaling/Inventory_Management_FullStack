@@ -29,7 +29,7 @@ public interface OrderItemService {
      * @param id the id
      * @return the order item by id
      */
-    OrderItemDto getOrderItemById(Long id);
+    List<OrderItemDto> getOrderItemById(Long id);
 
     /**
      * Update order item order item dto.

@@ -14,6 +14,7 @@ import com.amnil.invbackend.repository.OrderRepository;
 import com.amnil.invbackend.repository.ProductRepository;
 import com.amnil.invbackend.repository.UserRepository;
 import com.amnil.invbackend.service.OrderService;
+import com.amnil.invbackend.utils.CustomModelMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -23,15 +24,37 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The type Order service.
+ */
 @Service
 @AllArgsConstructor
 @Slf4j
 public class OrderServiceImpl implements OrderService {
+    /**
+     * orderRepository
+     */
     private final OrderRepository orderRepository;
+    /**
+     * orderItemRepository
+     */
     private final OrderItemRepository orderItemRepository;
+    /**
+     * userRepository
+     */
     private final UserRepository userRepository;
+    /**
+     * productRepository
+     */
     private final ProductRepository productRepository;
+    /**
+     * modelMapper
+     */
     private final ModelMapper modelMapper;
+    /**
+     * customModelMapper
+     */
+    private final CustomModelMapper customModelMapper;
 
 
     @Override
@@ -58,7 +81,6 @@ public class OrderServiceImpl implements OrderService {
 
             orderItem.setProduct(product);
             orderItem.setOrder(order);
-
             orderItems.add(orderItem);
         }
         order.setOrderItems(orderItems);
@@ -86,8 +108,14 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
         return orders.stream()
-                .map(order -> modelMapper.map(order, OrderDto.class))
+                .map(order -> customModelMapper.map(order, OrderDto.class))
                 .collect(Collectors.toList());
+
+//       for(OrderDto orderDto: orderDtos){
+//           orderDto.setOrderItems(null);
+//       }
+//       return orderDtos;
+
     }
 
     public OrderDto getOrderById(Long id) {
@@ -154,4 +182,6 @@ public class OrderServiceImpl implements OrderService {
 
 
 
-}
+} /**
+ * log
+ */

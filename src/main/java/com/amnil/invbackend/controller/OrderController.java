@@ -1,7 +1,11 @@
 package com.amnil.invbackend.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import com.amnil.invbackend.dto.PlaceOrderRequestDto;
 import com.amnil.invbackend.dto.core.OrderDto;
+import com.amnil.invbackend.dto.core.OrderItemDto;
+import com.amnil.invbackend.repository.OrderItemRepository;
+import com.amnil.invbackend.service.OrderItemService;
 import com.amnil.invbackend.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +26,12 @@ public class OrderController {
      * orderService
      */
     private final OrderService orderService;
+
+    /**
+     * orderItemService
+     */
+    private final OrderItemService orderItemService;
+
 
     /**
      * Place order response entity.
@@ -60,6 +70,11 @@ public class OrderController {
     @GetMapping("/public/order")
     public ResponseEntity<List<OrderDto>> getAllOrders() {
        List<OrderDto> orders = orderService.getAllOrders();
+
+       orders.stream()
+               .map((order) -> order.add(linkTo(methodOn(OrderController.class)
+                       .getOrderItemById(order.getOrderId())).withSelfRel())).toList();
+
        if (orders.isEmpty()){
            return ResponseEntity.notFound().build();
        }
@@ -95,6 +110,19 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("public/order/{id}/order-items")
+    public ResponseEntity<List<OrderItemDto>> getOrderItemById(@PathVariable Long id){
+        List<OrderItemDto> orderItemDto =  orderItemService.getOrderItemById(id);
+       if (orderItemDto != null){
+           return ResponseEntity.ok(orderItemDto);
+       }
+       else
+           return ResponseEntity.noContent().build();
+    }
+
+
 } /**
+ * log
+ */ /**
  * log
  */
