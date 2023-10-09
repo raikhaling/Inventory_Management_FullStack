@@ -35,6 +35,7 @@ public class CsvImportServiceImpl implements CsvImportService {
             // Skip the first row (headers)
             reader.skip(1);
             String[] nextLine;
+            
             while ((nextLine = reader.readNext()) != null) {
                 Product product = new Product();
                 log.info("parsing of import csv started.");
