@@ -1,4 +1,4 @@
-package com.amnil.invbackend.config;
+package com.amnil.invbackend.config.security;
 
 import com.amnil.invbackend.security.CustomUserDetailService;
 import com.amnil.invbackend.security.JwtAuthenticationEntryPoint;
@@ -19,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -43,6 +44,11 @@ public class SpringSecurityConfig {
      */
     private CustomUserDetailService userDetailsService; //spring security 6 onwards no need to manually provide its reference
         // to auth manager -> when we inject in config class uses this to loadUser
+
+    /**
+     * accessDeniedHandler
+     */
+    private final AccessDeniedHandler accessDeniedHandler;
 
     /**
      * Password encoder password encoder.
@@ -82,7 +88,9 @@ public class SpringSecurityConfig {
 
         // Set unauthorized requests exception handler
         http.exceptionHandling(exception ->exception
-                .authenticationEntryPoint(authenticationEntryPoint));
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler));
+
 
         // Add JWT token filter
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);

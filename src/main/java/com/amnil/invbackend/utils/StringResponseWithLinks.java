@@ -1,4 +1,4 @@
-package com.amnil.invbackend.dto;
+package com.amnil.invbackend.utils;
 
 
 import lombok.AllArgsConstructor;

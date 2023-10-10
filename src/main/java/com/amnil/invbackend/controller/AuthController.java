@@ -4,6 +4,7 @@ import com.amnil.invbackend.dto.auth.JwtAuthResponse;
 import com.amnil.invbackend.dto.auth.LoginDto;
 import com.amnil.invbackend.dto.auth.RegisterDto;
 import com.amnil.invbackend.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,7 @@ public class AuthController {
      */
 //Login Api
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
+    public ResponseEntity<JwtAuthResponse> login(@Valid @RequestBody LoginDto loginDto){
         log.info("Attempting to log in with email: {}", loginDto.getUsernameOrEmail());
 
         String token = authService.login(loginDto);

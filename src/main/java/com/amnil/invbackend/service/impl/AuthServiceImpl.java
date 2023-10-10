@@ -13,9 +13,9 @@ import com.amnil.invbackend.service.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -81,15 +81,25 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String login(LoginDto loginDto) {
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginDto.getUsernameOrEmail(),
-                loginDto.getPassword()
-        ));
+        try {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    loginDto.getUsernameOrEmail(),
+                    loginDto.getPassword()
+            ));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = jwtTokenProvider.generateToken(authentication);
+            String token = jwtTokenProvider.generateToken(authentication);
 
-        return token;
+            return token;
+        }catch (BadCredentialsException e){
+            throw new BadCredentialsException("Invalid Username or Password");
+        }catch (DisabledException e){
+            throw new DisabledException("Account is disabled.");
+        }catch (AccountExpiredException e){
+            throw new AccountExpiredException("Account expired.");
+        } catch (Exception e) {
+            throw new EntityNotFoundException("An unexpected error occurred while logging in.");
+        }
     }
 }

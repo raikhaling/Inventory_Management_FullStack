@@ -6,6 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 /**
  * The type Custom model mapper.
  */
@@ -19,9 +22,21 @@ public class CustomModelMapper extends ModelMapper {
         addMappings(new PropertyMap<Order, OrderDto>() {
             @Override
             protected void configure() {
-                skip(destination.getOrderItems());
+                //just set it to an empty list so we see orderItem [] in response
+                map().setOrderItems(new HashSet<>());
             }
         });
+
+
+      /*
+        In order to skip certain field
+        addMappings(new PropertyMap<Order, OrderDto>() {
+            @Override
+            protected void configure() {
+                skip(destination.getOrderItems());
+            }
+        }); */
     }
+
 }
 
