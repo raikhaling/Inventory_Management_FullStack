@@ -12,6 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * The type Spring fox config.
  */
 @Configuration
+//@EnableSwagger2
 public class SpringFoxConfig {
     /**
      * Api docket.

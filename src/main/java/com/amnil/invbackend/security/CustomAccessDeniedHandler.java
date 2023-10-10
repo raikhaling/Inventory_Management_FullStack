@@ -1,4 +1,4 @@
-package com.amnil.invbackend.config.security;
+package com.amnil.invbackend.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

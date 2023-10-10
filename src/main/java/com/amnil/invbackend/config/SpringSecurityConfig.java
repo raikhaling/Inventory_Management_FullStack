@@ -1,4 +1,4 @@
-package com.amnil.invbackend.config.security;
+package com.amnil.invbackend.config;
 
 import com.amnil.invbackend.security.CustomUserDetailService;
 import com.amnil.invbackend.security.JwtAuthenticationEntryPoint;
