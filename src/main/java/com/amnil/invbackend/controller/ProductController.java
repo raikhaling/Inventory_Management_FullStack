@@ -1,7 +1,6 @@
 package com.amnil.invbackend.controller;
 
 import com.amnil.invbackend.dto.core.ProductDto;
-import com.amnil.invbackend.entity.Product;
 import com.amnil.invbackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +54,17 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
+    @GetMapping("/public/products/page/{key}")
+    public ResponseEntity<List<ProductDto>> getProductsByPage(@PathVariable String key,
+                                                              @RequestParam(name = "page", defaultValue = "0") int page,
+                                                              @RequestParam(name = "size", defaultValue = "10") int size){
+        List<ProductDto> products = productService.getAllProductPageable(key, page, size);
+        if(!products.isEmpty())
+            return ResponseEntity.ok(products);
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
 
     /**
      * Create product response entity.
@@ -64,7 +74,7 @@ public class ProductController {
      * @return the response entity
      */
     @PostMapping("/admin/products-by/{supplierId}")
-    public ResponseEntity<ProductDto> createProduct( @RequestBody ProductDto productDto,
+    public ResponseEntity<ProductDto>   createProduct( @RequestBody ProductDto productDto,
                                                      @PathVariable Long supplierId){
         ProductDto savedProduct = productService.saveProduct(productDto, supplierId);
         return ResponseEntity.ok(savedProduct);
@@ -122,18 +132,7 @@ public class ProductController {
         return new ResponseEntity<>(productsBySupplier,HttpStatus.OK);
     }
 
-    /**
-     * Search product response entity.
-     *
-     * @param key the key
-     * @return the response entity
-     */
-    @GetMapping("/public/search/product/{key}")
-    public ResponseEntity<List<ProductDto>> searchProduct (@PathVariable String key){
-     //   List<ProductDto> productDtoList = productService.searchProduct(key);
-        List<ProductDto> productDtoList = productService.searchProduct(key);
-        return ResponseEntity.ok(productDtoList);
-    }
+
 
 
 //    @GetMapping("/products/search")

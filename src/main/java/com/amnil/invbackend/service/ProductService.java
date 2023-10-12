@@ -39,6 +39,8 @@ public interface ProductService {
      */
     List<ProductDto> getAllProductsBySupplier(Long id);
 
+    List<ProductDto> getAllProductPageable(String key, int page, int size);
+
     /**
      * Save product product dto.
      *
@@ -54,5 +56,21 @@ public interface ProductService {
      * @param key the key
      * @return the list
      */
-    List<ProductDto> searchProduct(String key);
+    List<ProductDto> searchProductContaining(String key);
+
+    /**
+     * Search product starting list.
+     *
+     * @param key the key
+     * @return the list
+     */
+    List<ProductDto> searchProductStarting(String key);
+
+    /**
+     * Search product natively list.
+     *
+     * @param key the key
+     * @return the list
+     */
+    List<ProductDto> searchProductNatively(String key);
 }

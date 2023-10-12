@@ -11,11 +11,17 @@ import com.amnil.invbackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Product service.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -91,7 +97,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> searchProduct(String key) {
+    public List<ProductDto> getAllProductPageable(String key, int page, int size) {
+        try {
+            //Pageable firstPageWithTwoElements = PageRequest.of(0, 10);
+            Pageable pageable = PageRequest.of(page, size);
+            List<Product> products = productRepository.findByProductNameStartingWith(key,
+                    pageable);
+
+            return products.stream().map((element) -> modelMapper.map(element, ProductDto.class)).toList();
+        }catch (Exception e){
+            throw new EntityNotFoundException("Products not found.");
+        }
+    }
+    /*
+        A Page<T> instance, in addition to having the list of Products, also knows about the total
+        number of available pages. It triggers an additional count query to achieve it.
+        To avoid such an overhead cost, we can instead return a Slice<T> or a List<T>.
+        A Slice only knows whether the next slice is available or not.
+     */
+
+    @Override
+    public List<ProductDto> searchProductContaining(String key) {
 //        log.info("fetching products from service..");
 //        List<Product> searchedProducts = productRepository.searchProduct(key);
 //        log.info("repo called successfully");
@@ -114,6 +140,27 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    @Override
+    public List<ProductDto> searchProductStarting(String key) {
+
+        try {
+            List<Product> products = productRepository.findByProductNameStartingWith(key);
+            return products.stream().map((element) -> modelMapper.map(element, ProductDto.class)).toList();
+        }catch (Exception e){
+            throw new EntityNotFoundException("Nothing matched.");
+        }
+    }
+
+    @Override
+    public List<ProductDto> searchProductNatively(String key) {
+        try {
+            List<Product> productList = productRepository.searchProductNative(key);
+            return productList.stream().map((element) -> modelMapper.map(element, ProductDto.class)).toList();
+        }catch (Exception e){
+            throw new EntityNotFoundException("No matched found");
+        }
+    }
+
     //Custom mapper function
 //    public ProductDto toDto(Product product){
 //        ProductDto productDto = new ProductDto();
@@ -131,6 +178,8 @@ public class ProductServiceImpl implements ProductService {
 //        return productDto;
 //    }
 } /**
+ * log
+ */ /**
  * log
  */
 
