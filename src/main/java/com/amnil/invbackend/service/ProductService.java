@@ -39,6 +39,8 @@ public interface ProductService {
      */
     List<ProductDto> getAllProductsBySupplier(Long id);
 
+    List<ProductDto> getAllProductPageable(String key, int page, int size);
+
     /**
      * Save product product dto.
      *

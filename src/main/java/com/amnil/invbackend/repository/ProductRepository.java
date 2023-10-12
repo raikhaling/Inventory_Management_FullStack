@@ -2,9 +2,12 @@ package com.amnil.invbackend.repository;
 
 import com.amnil.invbackend.entity.Product;
 import com.amnil.invbackend.entity.Supplier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -21,6 +24,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      */
     List<Product> findBySupplier(Supplier supplier);
 
+    //Page<Product> findAll(Pageable pageable);
+
+    List<Product> findByProductNameStartingWith(String name, Pageable pageable);
 
     /**
      * Search product native list.

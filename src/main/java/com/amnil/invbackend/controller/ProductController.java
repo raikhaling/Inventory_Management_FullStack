@@ -54,6 +54,17 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
+    @GetMapping("/public/products/page/{key}")
+    public ResponseEntity<List<ProductDto>> getProductsByPage(@PathVariable String key,
+                                                              @RequestParam(name = "page", defaultValue = "0") int page,
+                                                              @RequestParam(name = "size", defaultValue = "10") int size){
+        List<ProductDto> products = productService.getAllProductPageable(key, page, size);
+        if(!products.isEmpty())
+            return ResponseEntity.ok(products);
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
 
     /**
      * Create product response entity.
@@ -63,7 +74,7 @@ public class ProductController {
      * @return the response entity
      */
     @PostMapping("/admin/products-by/{supplierId}")
-    public ResponseEntity<ProductDto> createProduct( @RequestBody ProductDto productDto,
+    public ResponseEntity<ProductDto>   createProduct( @RequestBody ProductDto productDto,
                                                      @PathVariable Long supplierId){
         ProductDto savedProduct = productService.saveProduct(productDto, supplierId);
         return ResponseEntity.ok(savedProduct);

@@ -11,6 +11,9 @@ import com.amnil.invbackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -92,6 +95,26 @@ public class ProductServiceImpl implements ProductService {
                 .map((element) -> modelMapper.map(element, ProductDto.class))
                 .toList();
     }
+
+    @Override
+    public List<ProductDto> getAllProductPageable(String key, int page, int size) {
+        try {
+            //Pageable firstPageWithTwoElements = PageRequest.of(0, 10);
+            Pageable pageable = PageRequest.of(page, size);
+            List<Product> products = productRepository.findByProductNameStartingWith(key,
+                    pageable);
+
+            return products.stream().map((element) -> modelMapper.map(element, ProductDto.class)).toList();
+        }catch (Exception e){
+            throw new EntityNotFoundException("Products not found.");
+        }
+    }
+    /*
+        A Page<T> instance, in addition to having the list of Products, also knows about the total
+        number of available pages. It triggers an additional count query to achieve it.
+        To avoid such an overhead cost, we can instead return a Slice<T> or a List<T>.
+        A Slice only knows whether the next slice is available or not.
+     */
 
     @Override
     public List<ProductDto> searchProductContaining(String key) {
