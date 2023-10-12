@@ -63,4 +63,12 @@ public interface ProductService {
      * @return the list
      */
     List<ProductDto> searchProductStarting(String key);
+
+    /**
+     * Search product natively list.
+     *
+     * @param key the key
+     * @return the list
+     */
+    List<ProductDto> searchProductNatively(String key);
 }

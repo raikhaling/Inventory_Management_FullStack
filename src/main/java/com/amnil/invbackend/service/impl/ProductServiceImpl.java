@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Product service.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -125,6 +128,16 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public List<ProductDto> searchProductNatively(String key) {
+        try {
+            List<Product> productList = productRepository.searchProductNative(key);
+            return productList.stream().map((element) -> modelMapper.map(element, ProductDto.class)).toList();
+        }catch (Exception e){
+            throw new EntityNotFoundException("No matched found");
+        }
+    }
+
     //Custom mapper function
 //    public ProductDto toDto(Product product){
 //        ProductDto productDto = new ProductDto();
@@ -142,6 +155,8 @@ public class ProductServiceImpl implements ProductService {
 //        return productDto;
 //    }
 } /**
+ * log
+ */ /**
  * log
  */
 

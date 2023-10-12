@@ -1,6 +1,7 @@
 package com.amnil.invbackend.controller;
 
 import com.amnil.invbackend.dto.core.ProductDto;
+import com.amnil.invbackend.repository.ProductRepository;
 import com.amnil.invbackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/api/v1/search")
 public class SearchController {
+    private final ProductRepository productRepository;
 
     private final ProductService productService;
 
@@ -29,6 +31,11 @@ public class SearchController {
     @GetMapping("/public/product-starting/{key}")
     public ResponseEntity<List<ProductDto>> searchProductStarting (@PathVariable String key){
         List<ProductDto> productDtoList = productService.searchProductStarting(key);
+        return ResponseEntity.ok(productDtoList);
+    }
+    @GetMapping("/public/product-native/{key}")
+    public ResponseEntity<List<ProductDto>> searchProduct (@PathVariable String key){
+        List<ProductDto> productDtoList = productService.searchProductNatively(key);
         return ResponseEntity.ok(productDtoList);
     }
 

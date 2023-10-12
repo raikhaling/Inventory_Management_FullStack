@@ -21,14 +21,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      */
     List<Product> findBySupplier(Supplier supplier);
 
+
     /**
-     * Search product list.
+     * Search product native list.
      *
      * @param key the key
      * @return the list
      */
-//    @Query("select p from Product p where p.product_name like concat(:key, '%') order by p.name asc")
-//    List<Product> searchProduct(@Param("key") String key);
+    @Query(value = "select * from product p where p.product_name like %:key%", nativeQuery = true)
+    List<Product> searchProductNative(@Param("key") String key);
 
     /**
      * Find by product name list.
