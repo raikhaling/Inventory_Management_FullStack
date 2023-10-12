@@ -39,6 +39,14 @@ public interface ProductService {
      */
     List<ProductDto> getAllProductsBySupplier(Long id);
 
+    /**
+     * Gets all product pageable.
+     *
+     * @param key  the key
+     * @param page the page
+     * @param size the size
+     * @return the all product pageable
+     */
     List<ProductDto> getAllProductPageable(String key, int page, int size);
 
     /**

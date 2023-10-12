@@ -19,6 +19,9 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -106,8 +109,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    public List<OrderDto> getAllOrders() {
-        List<Order> orders = orderRepository.findAll();
+    /**
+     * Gets all orders.
+     *
+     * @return the all orders
+     */
+    public List<OrderDto> getAllOrders(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Order> orders = orderRepository.findAll(pageable);
         return orders.stream()
                 .map(order -> customModelMapper.map(order, OrderDto.class))
                 .collect(Collectors.toList());
@@ -184,5 +194,7 @@ public class OrderServiceImpl implements OrderService {
 
 
 } /**
+ * log
+ */ /**
  * log
  */

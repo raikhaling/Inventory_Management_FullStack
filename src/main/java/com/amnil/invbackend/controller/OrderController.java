@@ -68,8 +68,9 @@ public class OrderController {
      * @return the all orders
      */
     @GetMapping("/public/order")
-    public ResponseEntity<List<OrderDto>> getAllOrders() {
-       List<OrderDto> orders = orderService.getAllOrders();
+    public ResponseEntity<List<OrderDto>> getAllOrders(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                       @RequestParam(name = "size", defaultValue = "10")int size) {
+       List<OrderDto> orders = orderService.getAllOrders(page, size);
 
        orders.stream()
                .map((order) -> order.add(linkTo(methodOn(OrderController.class)

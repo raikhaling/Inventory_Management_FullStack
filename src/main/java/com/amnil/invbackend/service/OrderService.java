@@ -23,7 +23,7 @@ public interface OrderService {
      *
      * @return the all orders
      */
-    List<OrderDto> getAllOrders();
+    List<OrderDto> getAllOrders(int page, int size);
 
     /**
      * Gets order by id.
