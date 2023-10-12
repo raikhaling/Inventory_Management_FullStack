@@ -118,6 +118,7 @@ public class OrderServiceImpl implements OrderService {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Order> orders = orderRepository.findAll(pageable);
+        int totalPage = orders.getTotalPages();
         return orders.stream()
                 .map(order -> customModelMapper.map(order, OrderDto.class))
                 .collect(Collectors.toList());

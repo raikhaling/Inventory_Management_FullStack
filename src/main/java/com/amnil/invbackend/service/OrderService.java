@@ -21,6 +21,8 @@ public interface OrderService {
     /**
      * Gets all orders.
      *
+     * @param page the page
+     * @param size the size
      * @return the all orders
      */
     List<OrderDto> getAllOrders(int page, int size);
