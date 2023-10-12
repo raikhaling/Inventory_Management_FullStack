@@ -47,4 +47,12 @@ public interface ProductService {
      * @return the product dto
      */
     ProductDto saveProduct(ProductDto productDto, Long supplierId);
+
+    /**
+     * Search product list.
+     *
+     * @param key the key
+     * @return the list
+     */
+    List<ProductDto> searchProduct(String key);
 }
