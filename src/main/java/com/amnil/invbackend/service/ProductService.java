@@ -54,5 +54,13 @@ public interface ProductService {
      * @param key the key
      * @return the list
      */
-    List<ProductDto> searchProduct(String key);
+    List<ProductDto> searchProductContaining(String key);
+
+    /**
+     * Search product starting list.
+     *
+     * @param key the key
+     * @return the list
+     */
+    List<ProductDto> searchProductStarting(String key);
 }

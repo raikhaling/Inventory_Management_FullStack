@@ -91,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> searchProduct(String key) {
+    public List<ProductDto> searchProductContaining(String key) {
 //        log.info("fetching products from service..");
 //        List<Product> searchedProducts = productRepository.searchProduct(key);
 //        log.info("repo called successfully");
@@ -112,6 +112,17 @@ public class ProductServiceImpl implements ProductService {
                 throw new EntityNotFoundException("Exception occurred during product searching.");
             }
 
+    }
+
+    @Override
+    public List<ProductDto> searchProductStarting(String key) {
+
+        try {
+            List<Product> products = productRepository.findByProductNameStartingWith(key);
+            return products.stream().map((element) -> modelMapper.map(element, ProductDto.class)).toList();
+        }catch (Exception e){
+            throw new EntityNotFoundException("Nothing matched.");
+        }
     }
 
     //Custom mapper function

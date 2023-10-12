@@ -38,6 +38,21 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      */
     List<Product> findByProductName(String name);
 
+    /**
+     * Find by product name containing list.
+     *
+     * @param name the name
+     * @return the list
+     */
     List<Product> findByProductNameContaining(String name);
+
+    /**
+     * Find by product name starting with list.
+     *
+     * @param name the name
+     * @return the list
+     */
+    List<Product> findByProductNameStartingWith(String name);
+
 
 }

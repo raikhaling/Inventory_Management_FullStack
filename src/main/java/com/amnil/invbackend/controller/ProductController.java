@@ -1,7 +1,6 @@
 package com.amnil.invbackend.controller;
 
 import com.amnil.invbackend.dto.core.ProductDto;
-import com.amnil.invbackend.entity.Product;
 import com.amnil.invbackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -122,18 +121,7 @@ public class ProductController {
         return new ResponseEntity<>(productsBySupplier,HttpStatus.OK);
     }
 
-    /**
-     * Search product response entity.
-     *
-     * @param key the key
-     * @return the response entity
-     */
-    @GetMapping("/public/search/product/{key}")
-    public ResponseEntity<List<ProductDto>> searchProduct (@PathVariable String key){
-     //   List<ProductDto> productDtoList = productService.searchProduct(key);
-        List<ProductDto> productDtoList = productService.searchProduct(key);
-        return ResponseEntity.ok(productDtoList);
-    }
+
 
 
 //    @GetMapping("/products/search")
