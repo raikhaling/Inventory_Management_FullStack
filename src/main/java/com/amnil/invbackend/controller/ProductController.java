@@ -1,8 +1,10 @@
 package com.amnil.invbackend.controller;
 
 import com.amnil.invbackend.dto.core.ProductDto;
+import com.amnil.invbackend.entity.Product;
 import com.amnil.invbackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Slf4j
 public class ProductController {
 
     /**
@@ -38,6 +41,11 @@ public class ProductController {
 
     }
 
+    /**
+     * Get products response entity.
+     *
+     * @return the response entity
+     */
     @GetMapping("/public/products")
     public ResponseEntity<List<ProductDto>> getProducts(){
         List<ProductDto> products = productService.getAllProducts();
@@ -90,6 +98,7 @@ public class ProductController {
      */
     @DeleteMapping("/admin/products/{id}")
     public ResponseEntity<ProductDto> deleteProduct(@PathVariable Long id){
+        log.info("fetching products from controller");
         ProductDto existingOrder = productService.getProductById(id);
         if(existingOrder == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -112,4 +121,24 @@ public class ProductController {
         List<ProductDto> productsBySupplier = productService.getAllProductsBySupplier(supplierId);
         return new ResponseEntity<>(productsBySupplier,HttpStatus.OK);
     }
+
+    /**
+     * Search product response entity.
+     *
+     * @param key the key
+     * @return the response entity
+     */
+    @GetMapping("/public/search/product/{key}")
+    public ResponseEntity<List<ProductDto>> searchProduct (@PathVariable String key){
+     //   List<ProductDto> productDtoList = productService.searchProduct(key);
+        List<ProductDto> productDtoList = productService.searchProduct(key);
+        return ResponseEntity.ok(productDtoList);
+    }
+
+
+//    @GetMapping("/products/search")
+//    public ResponseEntity<List<Product>> searchProducts(@RequestParam String name) {
+//        List<Product> products = .findByNameLike("%" + name + "%");
+//        return ResponseEntity.ok(products);
+//    }
 }

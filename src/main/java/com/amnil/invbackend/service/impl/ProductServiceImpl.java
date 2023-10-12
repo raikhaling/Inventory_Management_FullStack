@@ -20,8 +20,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class ProductServiceImpl implements ProductService {
+    /**
+     * productRepository
+     */
     private final ProductRepository productRepository;
+    /**
+     * supplierRepository
+     */
     private final SupplierRepository supplierRepository;
+    /**
+     * modelMapper
+     */
     private final ModelMapper modelMapper;
 
     @Override
@@ -61,6 +70,8 @@ public class ProductServiceImpl implements ProductService {
         return modelMapper.map(product, ProductDto.class);
     }
 
+
+
     @Override
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
@@ -79,6 +90,30 @@ public class ProductServiceImpl implements ProductService {
                 .toList();
     }
 
+    @Override
+    public List<ProductDto> searchProduct(String key) {
+//        log.info("fetching products from service..");
+//        List<Product> searchedProducts = productRepository.searchProduct(key);
+//        log.info("repo called successfully");
+//        if(searchedProducts.isEmpty()){
+//            throw new EntityNotFoundException("No product matched.");
+//        }
+//        else {
+//            return searchedProducts.stream()
+//                    .map((element) -> modelMapper.map(element, ProductDto.class)).toList();
+//
+            try {//List<Product> products = productRepository.findByProductName("%" + key + "%");
+                List<Product> products = productRepository.findByProductNameContaining(key);
+                System.out.println(products);
+                return products.stream().map((element) -> modelMapper.map(element, ProductDto.class)).toList();
+
+
+            }catch (Exception e){
+                throw new EntityNotFoundException("Exception occurred during product searching.");
+            }
+
+    }
+
     //Custom mapper function
 //    public ProductDto toDto(Product product){
 //        ProductDto productDto = new ProductDto();
@@ -95,6 +130,8 @@ public class ProductServiceImpl implements ProductService {
 //        productDto.setSupplier(supplierDto);
 //        return productDto;
 //    }
-}
+} /**
+ * log
+ */
 
 

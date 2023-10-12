@@ -16,6 +16,7 @@ import com.amnil.invbackend.repository.UserRepository;
 import com.amnil.invbackend.service.OrderService;
 import com.amnil.invbackend.utils.CustomModelMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
  * The type Order service.
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class OrderServiceImpl implements OrderService {
     /**
